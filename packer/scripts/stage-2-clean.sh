@@ -1,5 +1,23 @@
 #!/bin/bash
 
+yum install -y make automake gcc bz2
+
+# Mount the disk image
+mkdir /tmp/isomount
+mount -t iso9660 -o loop /home/vagrant/VBoxGuestAdditions.iso /tmp/isomount
+
+# Install the drivers
+cd /tmp/isomount/
+source /opt/rh/devtoolset-8/enable
+bash VBoxLinuxAdditions.run --nox11
+usermod -aG vboxsf vagrant
+cp /opt/VBoxGuestAdditions-6.1.16/other/mount.vboxsf /sbin
+
+# Cleanup
+cd
+umount /tmp/isomount
+rm -rf /tmp/isomount /root/VBoxGuestAdditions.iso
+
 # clean all
 yum update -y
 yum clean all
@@ -27,5 +45,5 @@ rm -rf /run/log/journal/*
 dd if=/dev/zero of=/EMPTY bs=1M
 rm -f /EMPTY
 sync
-grub2-set-default 1
+grub2-set-default 0
 echo "###   Hi from secone stage" >> /boot/grub2/grub.cfg
