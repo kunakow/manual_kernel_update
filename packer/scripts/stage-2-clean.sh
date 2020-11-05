@@ -8,10 +8,8 @@ mount -t iso9660 -o loop /home/vagrant/VBoxGuestAdditions.iso /tmp/isomount
 
 # Install the drivers
 cd /tmp/isomount/
-source /opt/rh/devtoolset-8/enable
 bash VBoxLinuxAdditions.run --nox11
 usermod -aG vboxsf vagrant
-cp /opt/VBoxGuestAdditions-6.1.16/other/mount.vboxsf /sbin
 
 # Cleanup
 cd
