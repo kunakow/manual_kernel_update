@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Install elrepo
-yum install -y http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-# Install new kernel
-yum --enablerepo elrepo-kernel install kernel-ml -y
+rpm -i /home/vagrant/kernel-5.10.0_rc2-1.x86_64.rpm
+rpm -i /home/vagrant/kernel-headers-5.10.0_rc2-1.x86_64.rpm
 # Remove older kernels (Only for demo! Not Production!)
 rm -f /boot/*3.10*
+echo "Deleted success."
 # Update GRUB
 grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-set-default 0
